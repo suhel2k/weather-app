@@ -30,7 +30,13 @@
         <span class="logo-icon">🌤</span>
         <span class="logo-text">WeatherNow</span>
       </div>
-      <div class="header-time" id="headerTime"></div>
+      <div class="header-right">
+        <div class="header-time" id="headerTime"></div>
+        <div class="lang-toggle">
+          <button class="lang-btn active" id="btnLangEn">EN</button>
+          <button class="lang-btn" id="btnLangBn">বাং</button>
+        </div>
+      </div>
     </header>
 
     <!-- Search Section -->
@@ -47,6 +53,7 @@
             placeholder="Search for a city..."
             autocomplete="off"
             aria-label="City search input"
+            data-i18n-placeholder="searchPlaceholder"
           />
           <button id="searchBtn" class="search-btn" aria-label="Search weather">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -114,18 +121,18 @@
             <span class="temp-unit" id="tempUnit">°C</span>
           </div>
           <div class="weather-condition" id="weatherCondition">—</div>
-          <div class="feels-like">Feels like <span id="feelsLike">--</span></div>
+          <div class="feels-like"><span data-i18n="feelsLike">Feels like</span> <span id="feelsLike">--</span></div>
         </div>
         <div class="temp-range">
           <div class="temp-range-item">
             <span class="range-icon">🔼</span>
-            <span class="range-label">High</span>
+            <span class="range-label" data-i18n="high">High</span>
             <span class="range-value" id="tempHigh">--</span>
           </div>
           <div class="temp-range-divider"></div>
           <div class="temp-range-item">
             <span class="range-icon">🔽</span>
-            <span class="range-label">Low</span>
+            <span class="range-label" data-i18n="low">Low</span>
             <span class="range-value" id="tempLow">--</span>
           </div>
         </div>
@@ -136,7 +143,7 @@
         <div class="stat-card glass-card" id="statHumidity">
           <div class="stat-icon">💧</div>
           <div class="stat-info">
-            <div class="stat-label">Humidity</div>
+            <div class="stat-label" data-i18n="humidity">Humidity</div>
             <div class="stat-value" id="humidityVal">--%</div>
           </div>
           <div class="stat-bar-wrap">
@@ -147,7 +154,7 @@
         <div class="stat-card glass-card">
           <div class="stat-icon">🌬</div>
           <div class="stat-info">
-            <div class="stat-label">Wind Speed</div>
+            <div class="stat-label" data-i18n="windSpeed">Wind Speed</div>
             <div class="stat-value" id="windVal">-- km/h</div>
           </div>
           <div class="stat-sub" id="windDir">—</div>
@@ -156,16 +163,16 @@
         <div class="stat-card glass-card">
           <div class="stat-icon">👁</div>
           <div class="stat-info">
-            <div class="stat-label">Visibility</div>
+            <div class="stat-label" data-i18n="visibility">Visibility</div>
             <div class="stat-value" id="visibilityVal">-- km</div>
           </div>
-          <div class="stat-sub">Clear view</div>
+          <div class="stat-sub" data-i18n="clearView">Clear view</div>
         </div>
 
         <div class="stat-card glass-card">
           <div class="stat-icon">☀️</div>
           <div class="stat-info">
-            <div class="stat-label">UV Index</div>
+            <div class="stat-label" data-i18n="uvIndex">UV Index</div>
             <div class="stat-value" id="uvVal">--</div>
           </div>
           <div class="stat-sub" id="uvLabel">—</div>
@@ -174,16 +181,16 @@
         <div class="stat-card glass-card">
           <div class="stat-icon">🌧</div>
           <div class="stat-info">
-            <div class="stat-label">Precipitation</div>
+            <div class="stat-label" data-i18n="precipitation">Precipitation</div>
             <div class="stat-value" id="precipVal">-- mm</div>
           </div>
-          <div class="stat-sub">Last hour</div>
+          <div class="stat-sub" data-i18n="lastHour">Last hour</div>
         </div>
 
         <div class="stat-card glass-card">
           <div class="stat-icon">🧭</div>
           <div class="stat-info">
-            <div class="stat-label">Pressure</div>
+            <div class="stat-label" data-i18n="pressure">Pressure</div>
             <div class="stat-value" id="pressureVal">-- hPa</div>
           </div>
           <div class="stat-sub" id="pressureLabel">—</div>
@@ -194,7 +201,7 @@
       <div class="sun-times glass-card">
         <div class="sun-item">
           <span class="sun-icon">🌅</span>
-          <span class="sun-label">Sunrise</span>
+          <span class="sun-label" data-i18n="sunrise">Sunrise</span>
           <span class="sun-time" id="sunriseTime">--:--</span>
         </div>
         <div class="sun-arc">
@@ -205,7 +212,7 @@
         </div>
         <div class="sun-item">
           <span class="sun-icon">🌇</span>
-          <span class="sun-label">Sunset</span>
+          <span class="sun-label" data-i18n="sunset">Sunset</span>
           <span class="sun-time" id="sunsetTime">--:--</span>
         </div>
       </div>
@@ -219,7 +226,7 @@
             <line x1="8" y1="2" x2="8" y2="6"></line>
             <line x1="3" y1="10" x2="21" y2="10"></line>
           </svg>
-          7-Day Forecast
+          <span data-i18n="forecast7day">7-Day Forecast</span>
         </h2>
         <div class="forecast-grid" id="forecastGrid">
           <!-- Forecast cards injected here -->
@@ -233,7 +240,7 @@
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          Hourly Forecast
+          <span data-i18n="hourlyForecast">Hourly Forecast</span>
         </h2>
         <div class="hourly-scroll" id="hourlyScroll">
           <!-- Hourly cards injected here -->
