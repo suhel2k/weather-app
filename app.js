@@ -15,7 +15,129 @@ let state = {
   currentData: null,     // raw API response
   geoData: null,         // geocoding result
   debounceTimer: null,
+  lang: 'en',            // 'en' | 'bn'
 };
+
+/* ==========================================
+   TRANSLATIONS
+   ========================================== */
+const translations = {
+  en: {
+    searchPlaceholder: 'Search for a city...',
+    quick: 'Quick:',
+    loading: 'Fetching weather data...',
+    tryAgain: 'Try Again',
+    welcomeTitle: 'Discover the Weather',
+    welcomeSubtitle: 'Search for any city to get a live weather report — temperature, humidity, wind, and more.',
+    feelsLike: 'Feels like',
+    high: 'High',
+    low: 'Low',
+    humidity: 'Humidity',
+    windSpeed: 'Wind Speed',
+    visibility: 'Visibility',
+    clearView: 'Clear view',
+    uvIndex: 'UV Index',
+    precipitation: 'Precipitation',
+    lastHour: 'Last hour',
+    pressure: 'Pressure',
+    sunrise: 'Sunrise',
+    sunset: 'Sunset',
+    forecast7day: '7-Day Forecast',
+    hourlyForecast: 'Hourly Forecast',
+    highPressure: 'High pressure',
+    lowPressure: 'Low pressure',
+    today: 'Today',
+    now: 'Now',
+    cityNotFound: city => `No city found for "${city}". Please check the spelling.`,
+    fetchError: 'Failed to fetch location. Check your connection.',
+    weatherError: 'Failed to load weather data. Please try again.',
+    weatherDesc: {
+      0: 'Clear Sky', 1: 'Mostly Clear', 2: 'Partly Cloudy', 3: 'Overcast',
+      45: 'Foggy', 48: 'Icy Fog', 51: 'Light Drizzle', 53: 'Drizzle',
+      55: 'Heavy Drizzle', 56: 'Freezing Drizzle', 57: 'Heavy Freezing Drizzle',
+      61: 'Slight Rain', 63: 'Moderate Rain', 65: 'Heavy Rain',
+      66: 'Light Freezing Rain', 67: 'Heavy Freezing Rain',
+      71: 'Slight Snowfall', 73: 'Moderate Snowfall', 75: 'Heavy Snowfall',
+      77: 'Snow Grains', 80: 'Slight Rain Showers', 81: 'Moderate Rain Showers',
+      82: 'Violent Rain Showers', 85: 'Slight Snow Showers', 86: 'Heavy Snow Showers',
+      95: 'Thunderstorm', 96: 'Thunderstorm with Hail', 99: 'Thunderstorm with Heavy Hail',
+    },
+    uvLabels: { low: '🟢 Low', moderate: '🟡 Moderate', high: '🟠 High', veryHigh: '🔴 Very High', extreme: '🟣 Extreme' },
+    windDirs: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+  },
+  bn: {
+    searchPlaceholder: 'শহর খুঁজুন...',
+    quick: 'দ্রুত:',
+    loading: 'আবহাওয়ার তথ্য আনা হচ্ছে...',
+    tryAgain: 'আবার চেষ্টা করুন',
+    welcomeTitle: 'আবহাওয়া আবিষ্কার করুন',
+    welcomeSubtitle: 'যেকোনো শহর খুঁজুন এবং তাৎক্ষণিক আবহাওয়া রিপোর্ট পান — তাপমাত্রা, আর্দ্রতা, বায়ু এবং আরও অনেক কিছু।',
+    feelsLike: 'অনুভূত তাপমাত্রা',
+    high: 'সর্বোচ্চ',
+    low: 'সর্বনিম্ন',
+    humidity: 'আর্দ্রতা',
+    windSpeed: 'বায়ুর গতি',
+    visibility: 'দৃশ্যমানতা',
+    clearView: 'পরিষ্কার দৃশ্য',
+    uvIndex: 'ইউভি সূচক',
+    precipitation: 'বৃষ্টিপাত',
+    lastHour: 'গত এক ঘণ্টা',
+    pressure: 'বায়ুচাপ',
+    sunrise: 'সূর্যোদয়',
+    sunset: 'সূর্যাস্ত',
+    forecast7day: '৭ দিনের পূর্বাভাস',
+    hourlyForecast: 'ঘণ্টাওয়ারি পূর্বাভাস',
+    highPressure: 'উচ্চ চাপ',
+    lowPressure: 'নিম্ন চাপ',
+    today: 'আজ',
+    now: 'এখন',
+    cityNotFound: city => `"${city}" শহর পাওয়া যায়নি। বানান পরীক্ষা করুন।`,
+    fetchError: 'অবস্থান আনতে ব্যর্থ হয়েছে। সংযোগ পরীক্ষা করুন।',
+    weatherError: 'আবহাওয়ার তথ্য লোড করতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।',
+    weatherDesc: {
+      0: 'পরিষ্কার আকাশ', 1: 'প্রায় পরিষ্কার', 2: 'আংশিক মেঘলা', 3: 'মেঘাচ্ছন্ন',
+      45: 'কুয়াশাচ্ছন্ন', 48: 'বরফাবৃত কুয়াশা', 51: 'হালকা গুঁড়ি বৃষ্টি', 53: 'গুঁড়ি বৃষ্টি',
+      55: 'ভারী গুঁড়ি বৃষ্টি', 56: 'হিমশীতল গুঁড়ি বৃষ্টি', 57: 'ভারী হিমশীতল গুঁড়ি বৃষ্টি',
+      61: 'হালকা বৃষ্টি', 63: 'মাঝারি বৃষ্টি', 65: 'ভারী বৃষ্টি',
+      66: 'হালকা হিমবৃষ্টি', 67: 'ভারী হিমবৃষ্টি',
+      71: 'হালকা তুষারপাত', 73: 'মাঝারি তুষারপাত', 75: 'ভারী তুষারপাত',
+      77: 'তুষারকণা', 80: 'হালকা বৃষ্টির ঝাপটা', 81: 'মাঝারি বৃষ্টির ঝাপটা',
+      82: 'তীব্র বৃষ্টির ঝাপটা', 85: 'হালকা তুষার ঝাপটা', 86: 'ভারী তুষার ঝাপটা',
+      95: 'বজ্রঝড়', 96: 'শিলাবৃষ্টিসহ বজ্রঝড়', 99: 'ভারী শিলাবৃষ্টিসহ বজ্রঝড়',
+    },
+    uvLabels: { low: '🟢 কম', moderate: '🟡 মাঝারি', high: '🟠 বেশি', veryHigh: '🔴 অনেক বেশি', extreme: '🟣 চরম' },
+    windDirs: ['উ', 'উ-পূ', 'পূ', 'দ-পূ', 'দ', 'দ-প', 'প', 'উ-প'],
+  },
+};
+
+function t(key) {
+  return translations[state.lang][key] || translations.en[key] || key;
+}
+
+function applyLang() {
+  const lang = state.lang;
+  document.documentElement.lang = lang === 'bn' ? 'bn' : 'en';
+
+  // Swap all data-i18n text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const text = translations[lang][key];
+    if (text !== undefined) el.textContent = text;
+  });
+
+  // Swap placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const text = translations[lang][key];
+    if (text !== undefined) el.placeholder = text;
+  });
+
+  // Re-render dynamic content if weather is loaded
+  if (state.currentData && state.geoData) {
+    const { name, country, admin1 } = state.geoData;
+    renderWeather(state.currentData, name, country, admin1 || '');
+  }
+}
 
 /* ==========================================
    DOM REFERENCES
