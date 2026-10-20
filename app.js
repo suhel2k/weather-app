@@ -132,6 +132,17 @@ function attachEvents() {
     const val = cityInput.value.trim();
     if (val) searchCity(val);
   });
+
+  // Language toggle
+  $('btnLangEn').addEventListener('click', () => setLang('en'));
+  $('btnLangBn').addEventListener('click', () => setLang('bn'));
+}
+
+function setLang(lang) {
+  state.lang = lang;
+  $('btnLangEn').classList.toggle('active', lang === 'en');
+  $('btnLangBn').classList.toggle('active', lang === 'bn');
+  applyLang();
 }
 
 /* ==========================================
@@ -183,7 +194,7 @@ async function searchCity(cityName) {
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      showError(`No city found for "${cityName}". Please check the spelling.`);
+      showError(translations[state.lang].cityNotFound(cityName));
       return;
     }
 
@@ -193,7 +204,7 @@ async function searchCity(cityName) {
 
   } catch (err) {
     console.error('Search error:', err);
-    showError('Failed to fetch location. Check your connection.');
+    showError(t('fetchError'));
   }
 }
 
@@ -232,7 +243,7 @@ async function fetchWeather(lat, lon, name, country, region) {
 
   } catch (err) {
     console.error('Weather fetch error:', err);
-    showError('Failed to load weather data. Please try again.');
+    showError(t('weatherError'));
   }
 }
 
@@ -283,7 +294,7 @@ function renderWeather(data, cityName, country, region) {
 
   const pressure = Math.round(cur.surface_pressure || 0);
   $('pressureVal').textContent = `${pressure} hPa`;
-  $('pressureLabel').textContent = pressure > 1013 ? 'High pressure' : 'Low pressure';
+  $('pressureLabel').textContent = pressure > 1013 ? t('highPressure') : t('lowPressure');
 
   // Sun times
   const sunrise = new Date(daily.sunrise[0]);
@@ -332,7 +343,7 @@ function renderForecast(daily) {
   days.forEach((dateStr, i) => {
     const isToday = dateStr === today;
     const date = new Date(dateStr + 'T12:00:00');
-    const dayLabel = isToday ? 'Today' : date.toLocaleDateString('en-GB', { weekday: 'short' });
+    const dayLabel = isToday ? t('today') : date.toLocaleDateString('en-GB', { weekday: 'short' });
 
     const high = state.unit === 'fahrenheit' ? cToF(Math.round(highs[i])) : Math.round(highs[i]);
     const low  = state.unit === 'fahrenheit' ? cToF(Math.round(lows[i]))  : Math.round(lows[i]);
@@ -367,8 +378,8 @@ function renderHourly(hourly, units, tz) {
   const precip = hourly.precipitation_probability;
 
   // Get the next 24 hours starting from current
-  let startIdx = times.findIndex(t => {
-    const d = new Date(t);
+  let startIdx = times.findIndex(ts => {
+    const d = new Date(ts);
     return d >= now;
   });
   if (startIdx === -1) startIdx = 0;
@@ -382,7 +393,7 @@ function renderHourly(hourly, units, tz) {
     const d = new Date(timeStr);
     const hour = d.getHours();
     const isNow = i === 0;
-    const timeLabel = isNow ? 'Now' : d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const timeLabel = isNow ? t('now') : d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     const isDay = hour >= 6 && hour < 20;
     const tempVal = state.unit === 'fahrenheit' ? cToF(Math.round(sliceTemps[i])) : Math.round(sliceTemps[i]);
     const unit = state.unit === 'celsius' ? '°C' : '°F';
@@ -483,17 +494,18 @@ function formatDatetimeInTz(tz) {
 }
 
 function getWindDirection(deg) {
-  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+  const dirs = translations[state.lang].windDirs;
   return dirs[Math.round(deg / 45) % 8];
 }
 
 function getUVLabel(uv) {
   if (uv === '--' || uv == null) return '—';
-  if (uv <= 2)  return '🟢 Low';
-  if (uv <= 5)  return '🟡 Moderate';
-  if (uv <= 7)  return '🟠 High';
-  if (uv <= 10) return '🔴 Very High';
-  return '🟣 Extreme';
+  const labels = translations[state.lang].uvLabels;
+  if (uv <= 2)  return labels.low;
+  if (uv <= 5)  return labels.moderate;
+  if (uv <= 7)  return labels.high;
+  if (uv <= 10) return labels.veryHigh;
+  return labels.extreme;
 }
 
 function getFlagEmoji(countryCode) {
@@ -546,35 +558,6 @@ function getWeatherIcon(code, isDay = true) {
 }
 
 function getWeatherDescription(code) {
-  const map = {
-    0:  'Clear Sky',
-    1:  'Mostly Clear',
-    2:  'Partly Cloudy',
-    3:  'Overcast',
-    45: 'Foggy',
-    48: 'Icy Fog',
-    51: 'Light Drizzle',
-    53: 'Drizzle',
-    55: 'Heavy Drizzle',
-    56: 'Freezing Drizzle',
-    57: 'Heavy Freezing Drizzle',
-    61: 'Slight Rain',
-    63: 'Moderate Rain',
-    65: 'Heavy Rain',
-    66: 'Light Freezing Rain',
-    67: 'Heavy Freezing Rain',
-    71: 'Slight Snowfall',
-    73: 'Moderate Snowfall',
-    75: 'Heavy Snowfall',
-    77: 'Snow Grains',
-    80: 'Slight Rain Showers',
-    81: 'Moderate Rain Showers',
-    82: 'Violent Rain Showers',
-    85: 'Slight Snow Showers',
-    86: 'Heavy Snow Showers',
-    95: 'Thunderstorm',
-    96: 'Thunderstorm with Hail',
-    99: 'Thunderstorm with Heavy Hail',
-  };
-  return map[code] || 'Unknown';
+  const map = translations[state.lang].weatherDesc;
+  return map[code] || (state.lang === 'bn' ? 'অজানা' : 'Unknown');
 }
