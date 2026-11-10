@@ -64,6 +64,35 @@ const translations = {
     },
     uvLabels: { low: '🟢 Low', moderate: '🟡 Moderate', high: '🟠 High', veryHigh: '🔴 Very High', extreme: '🟣 Extreme' },
     windDirs: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+    // Laundry Advisor
+    laundryTitle: 'Laundry Advisor',
+    laundryBadgeGreat: '✅ Great Drying Day',
+    laundryBadgeCaution: '⚠️ May Work — Stay Alert',
+    laundryBadgeSkip: '❌ Skip Laundry Today',
+    laundrySkyLabel: 'Sky',
+    laundryWindLabel: 'Wind',
+    laundryHumLabel: 'Humidity',
+    laundryUVLabel: 'UV',
+    laundryWindCalm: 'Calm',
+    laundryWindBreezy: 'Breezy',
+    laundryWindStrong: 'Very Windy',
+    laundryHumLow: 'Low',
+    laundryHumMod: 'Moderate',
+    laundryHumHigh: 'High',
+    laundryUVStrong: 'Strong',
+    laundryUVMod: 'Moderate',
+    laundryUVWeak: 'Weak',
+    laundryVerdictSunny: 'Bright sunshine, low humidity, and a breeze — perfect conditions to hang laundry outside. Clothes should dry in no time!',
+    laundryVerdictBreezy: 'A good breeze will help dry clothes quickly today. Excellent conditions for outdoor laundry!',
+    laundryVerdictGood: 'Good drying conditions today. Hang your laundry outside and enjoy natural drying.',
+    laundryVerdictOvercast: 'Overcast skies won\'t block drying entirely, but clothes will take longer. Keep an eye on the sky.',
+    laundryVerdictHumid: 'High humidity today will slow drying significantly. Consider waiting for a drier day.',
+    laundryVerdictCalm: 'No wind today will slow drying. Clothes will still dry, but allow extra time.',
+    laundryVerdictRain: 'Rain is on the way — keep laundry indoors to avoid a re-wash.',
+    laundryVerdictFog: 'Foggy air adds moisture to everything. Clothes left outside won\'t dry and may smell damp.',
+    laundryVerdictThunder: 'Thunderstorms ahead! Definitely keep laundry inside today.',
+    laundryVerdictSnow: 'Snowfall today means laundry stays inside — frozen clothes aren\'t dry clothes!',
+    laundryVerdictGeneral: 'Poor weather conditions today. Wait for a sunnier day for best drying results.',
   },
   bn: {
     searchPlaceholder: 'শহর খুঁজুন...',
@@ -107,6 +136,35 @@ const translations = {
     },
     uvLabels: { low: '🟢 কম', moderate: '🟡 মাঝারি', high: '🟠 বেশি', veryHigh: '🔴 অনেক বেশি', extreme: '🟣 চরম' },
     windDirs: ['উ', 'উ-পূ', 'পূ', 'দ-পূ', 'দ', 'দ-প', 'প', 'উ-প'],
+    // Laundry Advisor
+    laundryTitle: 'কাপড় শুকানোর পরামর্শ',
+    laundryBadgeGreat: '✅ কাপড় শুকানোর উত্তম দিন',
+    laundryBadgeCaution: '⚠️ সম্ভব — তবে সতর্ক থাকুন',
+    laundryBadgeSkip: '❌ আজ কাপড় না ধোয়াই ভালো',
+    laundrySkyLabel: 'আকাশ',
+    laundryWindLabel: 'বায়ু',
+    laundryHumLabel: 'আর্দ্রতা',
+    laundryUVLabel: 'ইউভি',
+    laundryWindCalm: 'শান্ত',
+    laundryWindBreezy: 'মৃদু বাতাস',
+    laundryWindStrong: 'তীব্র বাতাস',
+    laundryHumLow: 'কম',
+    laundryHumMod: 'মাঝারি',
+    laundryHumHigh: 'বেশি',
+    laundryUVStrong: 'তীব্র',
+    laundryUVMod: 'মাঝারি',
+    laundryUVWeak: 'দুর্বল',
+    laundryVerdictSunny: 'উজ্জ্বল রোদ, কম আর্দ্রতা এবং মৃদু বাতাস — বাইরে কাপড় ঝোলানোর নিখুঁত দিন! কাপড় দ্রুত শুকিয়ে যাবে।',
+    laundryVerdictBreezy: 'মৃদু বাতাস আজ কাপড় দ্রুত শুকাতে সাহায্য করবে। বাইরে কাপড় দেওয়ার দারুণ সুযোগ!',
+    laundryVerdictGood: 'আজ কাপড় শুকানোর ভালো পরিস্থিতি। বাইরে কাপড় ঝুলিয়ে দিন।',
+    laundryVerdictOvercast: 'মেঘলা আকাশে কাপড় শুকাতে বেশি সময় লাগবে। আবহাওয়ার দিকে নজর রাখুন।',
+    laundryVerdictHumid: 'আজ উচ্চ আর্দ্রতা কাপড় শুকানো ধীর করবে। শুকনো আবহাওয়ার জন্য অপেক্ষা করা ভালো।',
+    laundryVerdictCalm: 'আজ বাতাস কম, তাই কাপড় শুকাতে সময় বেশি লাগবে। বাড়তি সময় রাখুন।',
+    laundryVerdictRain: 'বৃষ্টি আসছে — কাপড় ঘরের ভেতরে রাখুন, না হলে আবার ধুতে হবে।',
+    laundryVerdictFog: 'কুয়াশাচ্ছন্ন আবহাওয়ায় বাইরের কাপড় ভেজা থাকবে এবং গন্ধ হতে পারে।',
+    laundryVerdictThunder: 'বজ্রঝড় আসছে! আজ কাপড় অবশ্যই ঘরের ভেতরে রাখুন।',
+    laundryVerdictSnow: 'তুষারপাতের দিনে কাপড় ঘরেই রাখুন — জমাট কাপড় শুকনো নয়!',
+    laundryVerdictGeneral: 'আজ আবহাওয়া প্রতিকূল। ভালো আবহাওয়ার জন্য অপেক্ষা করুন।',
   },
 };
 
@@ -434,6 +492,9 @@ function renderWeather(data, cityName, country, region) {
   // Animate sun position on arc
   animateSunPosition(sunrise, sunset);
 
+  // Laundry Advisor
+  renderLaundryAdvisor(cur);
+
   // 7-Day Forecast
   renderForecast(daily);
 
@@ -453,6 +514,145 @@ function updateTemperatureDisplay(tempC, feelsC, highC, lowC) {
   $('feelsLike').textContent = `${toDisplay(feelsC)}${unitSuffix}`;
   $('tempHigh').textContent = `${toDisplay(highC)}${unitSuffix}`;
   $('tempLow').textContent  = `${toDisplay(lowC)}${unitSuffix}`;
+}
+
+/* ==========================================
+   LAUNDRY ADVISOR
+   ========================================== */
+function renderLaundryAdvisor(cur) {
+  const wCode    = cur.weather_code;
+  const humidity = cur.relative_humidity_2m;
+  const windKmh  = Math.round(cur.wind_speed_10m);
+  const precip   = cur.precipitation || 0;
+  const uv       = cur.uv_index != null ? Math.round(cur.uv_index) : 0;
+
+  const rainCodes    = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82];
+  const snowCodes    = [71, 73, 75, 77, 85, 86];
+  const thunderCodes = [95, 96, 99];
+  const fogCodes     = [45, 48];
+
+  const isRainy   = rainCodes.includes(wCode) || precip > 0.1;
+  const isSnowy   = snowCodes.includes(wCode);
+  const isThunder = thunderCodes.includes(wCode);
+  const isFoggy   = fogCodes.includes(wCode);
+  const isOvercast    = wCode === 3;
+  const isBadWeather  = isRainy || isSnowy || isThunder || isFoggy;
+
+  let level, verdictKey, emoji, scoreVal = 0;
+
+  if (isThunder) {
+    level = 'skip'; verdictKey = 'laundryVerdictThunder'; emoji = '⛈️';
+  } else if (isSnowy) {
+    level = 'skip'; verdictKey = 'laundryVerdictSnow';    emoji = '❄️';
+  } else if (isRainy) {
+    level = 'skip'; verdictKey = 'laundryVerdictRain';    emoji = '☔';
+  } else if (isFoggy) {
+    level = 'skip'; verdictKey = 'laundryVerdictFog';     emoji = '🌫️';
+  } else {
+    // Score: max 9 points
+    if (wCode === 0) scoreVal += 3;
+    else if (wCode === 1) scoreVal += 2;
+    else if (wCode === 2) scoreVal += 1;
+
+    if (windKmh >= 10 && windKmh <= 40) scoreVal += 2;
+    else if (windKmh > 5) scoreVal += 1;
+
+    if (humidity < 50) scoreVal += 2;
+    else if (humidity < 65) scoreVal += 1;
+    else if (humidity > 80) scoreVal -= 1;
+
+    if (uv >= 5) scoreVal += 2;
+    else if (uv >= 2) scoreVal += 1;
+
+    scoreVal = Math.max(0, Math.min(9, scoreVal));
+
+    if (scoreVal >= 5) {
+      level = 'great'; emoji = '👕';
+      if (wCode === 0 && uv >= 5) verdictKey = 'laundryVerdictSunny';
+      else if (windKmh >= 10)     verdictKey = 'laundryVerdictBreezy';
+      else                        verdictKey = 'laundryVerdictGood';
+    } else if (scoreVal >= 2) {
+      level = 'caution'; emoji = '🧺';
+      if (isOvercast)         verdictKey = 'laundryVerdictOvercast';
+      else if (humidity > 70) verdictKey = 'laundryVerdictHumid';
+      else                    verdictKey = 'laundryVerdictCalm';
+    } else {
+      level = 'skip'; emoji = '🚫'; verdictKey = 'laundryVerdictGeneral';
+    }
+  }
+
+  // Map score → 0–5 display dots
+  let displayScore;
+  if (isBadWeather)        displayScore = 0;
+  else if (level === 'skip')    displayScore = 1;
+  else if (level === 'caution') displayScore = scoreVal <= 3 ? 2 : 3;
+  else                          displayScore = scoreVal <= 6 ? 4 : 5;
+
+  const badgeKey = level === 'great' ? 'laundryBadgeGreat'
+                 : level === 'caution' ? 'laundryBadgeCaution'
+                 : 'laundryBadgeSkip';
+
+  $('laundryEmoji').textContent        = emoji;
+  $('laundryBadge').textContent        = t(badgeKey);
+  $('laundryBadge').className          = `laundry-badge ${level}`;
+  $('laundryVerdict').textContent      = t(verdictKey);
+
+  // Score dots
+  const scoreEl = $('laundryScore');
+  scoreEl.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    const dot = document.createElement('span');
+    dot.className = `score-dot${i < displayScore ? ` filled ${level}` : ''}`;
+    scoreEl.appendChild(dot);
+  }
+
+  // Factor pills
+  const windDesc = windKmh < 5  ? t('laundryWindCalm')
+                 : windKmh <= 35 ? t('laundryWindBreezy')
+                 : t('laundryWindStrong');
+  const windGood = windKmh >= 5 && windKmh <= 35;
+
+  const humDesc = humidity < 50 ? t('laundryHumLow')
+                : humidity < 70 ? t('laundryHumMod')
+                : t('laundryHumHigh');
+  const humGood = humidity < 65;
+
+  const uvDesc = uv >= 5 ? t('laundryUVStrong') : uv >= 2 ? t('laundryUVMod') : t('laundryUVWeak');
+  const uvGood = uv >= 2;
+
+  const skyDesc = getWeatherDescription(wCode);
+  const skyGood = !isBadWeather && wCode <= 2;
+
+  $('laundryFactors').innerHTML = `
+    <div class="laundry-factor ${skyGood ? 'good' : isBadWeather ? 'bad' : 'neutral'}">
+      <span class="lf-icon">🌤</span>
+      <div class="lf-info">
+        <span class="lf-label">${t('laundrySkyLabel')}</span>
+        <span class="lf-value">${skyDesc}</span>
+      </div>
+    </div>
+    <div class="laundry-factor ${windGood ? 'good' : 'neutral'}">
+      <span class="lf-icon">🌬</span>
+      <div class="lf-info">
+        <span class="lf-label">${t('laundryWindLabel')}</span>
+        <span class="lf-value">${windKmh} km/h · ${windDesc}</span>
+      </div>
+    </div>
+    <div class="laundry-factor ${humGood ? 'good' : 'bad'}">
+      <span class="lf-icon">💧</span>
+      <div class="lf-info">
+        <span class="lf-label">${t('laundryHumLabel')}</span>
+        <span class="lf-value">${humidity}% · ${humDesc}</span>
+      </div>
+    </div>
+    <div class="laundry-factor ${uvGood ? 'good' : 'neutral'}">
+      <span class="lf-icon">☀️</span>
+      <div class="lf-info">
+        <span class="lf-label">${t('laundryUVLabel')}</span>
+        <span class="lf-value">${uv} · ${uvDesc}</span>
+      </div>
+    </div>
+  `;
 }
 
 /* ==========================================

@@ -114,7 +114,10 @@
 
       <!-- Main Weather Card -->
       <div class="main-weather-card glass-card">
+        <!-- Left: icon -->
         <div class="weather-icon-large" id="weatherIconLarge">☀️</div>
+
+        <!-- Centre: temp + condition -->
         <div class="weather-main-info">
           <div class="temperature-display">
             <span class="temp-value" id="tempValue">--</span>
@@ -123,19 +126,58 @@
           <div class="weather-condition" id="weatherCondition">—</div>
           <div class="feels-like"><span data-i18n="feelsLike">Feels like</span> <span id="feelsLike">--</span></div>
         </div>
-        <div class="temp-range">
-          <div class="temp-range-item">
-            <span class="range-icon">🔼</span>
-            <span class="range-label" data-i18n="high">High</span>
-            <span class="range-value" id="tempHigh">--</span>
+
+        <!-- Right: high/low + sunrise/sunset -->
+        <div class="card-right-panel">
+          <div class="temp-range">
+            <div class="temp-range-item">
+              <span class="range-icon">🔼</span>
+              <span class="range-label" data-i18n="high">High</span>
+              <span class="range-value" id="tempHigh">--</span>
+            </div>
+            <div class="temp-range-divider"></div>
+            <div class="temp-range-item">
+              <span class="range-icon">🔽</span>
+              <span class="range-label" data-i18n="low">Low</span>
+              <span class="range-value" id="tempLow">--</span>
+            </div>
           </div>
-          <div class="temp-range-divider"></div>
-          <div class="temp-range-item">
-            <span class="range-icon">🔽</span>
-            <span class="range-label" data-i18n="low">Low</span>
-            <span class="range-value" id="tempLow">--</span>
+
+          <div class="card-sun-divider"></div>
+
+          <div class="card-sun-times">
+            <div class="card-sun-item">
+              <span class="sun-icon">🌅</span>
+              <span class="sun-label" data-i18n="sunrise">Sunrise</span>
+              <span class="sun-time" id="sunriseTime">--:--</span>
+            </div>
+            <div class="card-sun-arc">
+              <svg viewBox="0 0 200 80" class="sun-arc-svg">
+                <path d="M 10 70 Q 100 -10 190 70" stroke="rgba(255,200,50,0.4)" stroke-width="2" fill="none" stroke-dasharray="4,4"/>
+                <circle cx="100" cy="30" r="6" fill="rgba(255,200,50,0.8)" id="sunPosition"/>
+              </svg>
+            </div>
+            <div class="card-sun-item">
+              <span class="sun-icon">🌇</span>
+              <span class="sun-label" data-i18n="sunset">Sunset</span>
+              <span class="sun-time" id="sunsetTime">--:--</span>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- Laundry Advisor -->
+      <div class="laundry-advisor glass-card" id="laundryAdvisor">
+        <div class="laundry-top">
+          <div class="laundry-emoji" id="laundryEmoji">👕</div>
+          <div class="laundry-meta">
+            <div class="laundry-heading" data-i18n="laundryTitle">Laundry Advisor</div>
+            <div class="laundry-badge great" id="laundryBadge">Great Drying Day</div>
+          </div>
+          <div class="laundry-score" id="laundryScore"></div>
+        </div>
+        <p class="laundry-verdict" id="laundryVerdict"></p>
+        <div class="laundry-factors" id="laundryFactors"></div>
       </div>
 
       <!-- Stats Grid -->
@@ -194,26 +236,6 @@
             <div class="stat-value" id="pressureVal">-- hPa</div>
           </div>
           <div class="stat-sub" id="pressureLabel">—</div>
-        </div>
-      </div>
-
-      <!-- Sun Times -->
-      <div class="sun-times glass-card">
-        <div class="sun-item">
-          <span class="sun-icon">🌅</span>
-          <span class="sun-label" data-i18n="sunrise">Sunrise</span>
-          <span class="sun-time" id="sunriseTime">--:--</span>
-        </div>
-        <div class="sun-arc">
-          <svg viewBox="0 0 200 80" class="sun-arc-svg">
-            <path d="M 10 70 Q 100 -10 190 70" stroke="rgba(255,200,50,0.4)" stroke-width="2" fill="none" stroke-dasharray="4,4"/>
-            <circle cx="100" cy="30" r="6" fill="rgba(255,200,50,0.8)" id="sunPosition"/>
-          </svg>
-        </div>
-        <div class="sun-item">
-          <span class="sun-icon">🌇</span>
-          <span class="sun-label" data-i18n="sunset">Sunset</span>
-          <span class="sun-time" id="sunsetTime">--:--</span>
         </div>
       </div>
 
