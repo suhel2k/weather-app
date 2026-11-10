@@ -70,7 +70,7 @@
         <span class="popular-label">Quick:</span>
         <button class="city-chip" data-city="London">🇬🇧 London</button>
         <button class="city-chip" data-city="Dhaka">🇧🇩 Dhaka</button>
-        <button class="city-chip" data-city="Connecticut">🇺🇸 Connecticut</button>
+        <button class="city-chip" data-city="Connecticut" data-lat="41.6032" data-lon="-72.6877" data-country="United States" data-region="Connecticut">🇺🇸 Connecticut</button>
         <button class="city-chip" data-city="Vancouver">🇨🇦 Vancouver</button>
         <button class="city-chip" data-city="New York">🇺🇸 New York</button>
       </div>
@@ -99,32 +99,32 @@
     <!-- Weather Content -->
     <main class="weather-content" id="weatherContent">
 
-      <!-- City Header -->
-      <div class="city-header">
-        <div class="city-info">
-          <h1 class="city-name" id="cityName">—</h1>
+      <!-- Main Weather Card -->
+      <div class="main-weather-card glass-card">
+        <!-- City Info -->
+        <div class="card-city-info">
+          <div class="city-name-row">
+            <h1 class="city-name" id="cityName">—</h1>
+            <div class="unit-toggle">
+              <button class="unit-btn active" id="btnCelsius">°C</button>
+              <button class="unit-btn" id="btnFahrenheit">°F</button>
+            </div>
+          </div>
           <p class="city-country" id="cityCountry">—</p>
           <p class="city-datetime" id="cityDatetime">—</p>
         </div>
-        <div class="unit-toggle">
-          <button class="unit-btn active" id="btnCelsius">°C</button>
-          <button class="unit-btn" id="btnFahrenheit">°F</button>
-        </div>
-      </div>
 
-      <!-- Main Weather Card -->
-      <div class="main-weather-card glass-card">
-        <!-- Left: icon -->
-        <div class="weather-icon-large" id="weatherIconLarge">☀️</div>
-
-        <!-- Centre: temp + condition -->
-        <div class="weather-main-info">
-          <div class="temperature-display">
-            <span class="temp-value" id="tempValue">--</span>
-            <span class="temp-unit" id="tempUnit">°C</span>
+        <!-- Center: icon + temp + condition -->
+        <div class="card-weather-center">
+          <div class="weather-icon-large" id="weatherIconLarge">☀️</div>
+          <div class="weather-main-info">
+            <div class="temperature-display">
+              <span class="temp-value" id="tempValue">--</span>
+              <span class="temp-unit" id="tempUnit">°C</span>
+            </div>
+            <div class="weather-condition" id="weatherCondition">—</div>
+            <div class="feels-like"><span data-i18n="feelsLike">Feels like</span> <span id="feelsLike">--</span></div>
           </div>
-          <div class="weather-condition" id="weatherCondition">—</div>
-          <div class="feels-like"><span data-i18n="feelsLike">Feels like</span> <span id="feelsLike">--</span></div>
         </div>
 
         <!-- Right: high/low + sunrise/sunset -->
@@ -178,65 +178,6 @@
         </div>
         <p class="laundry-verdict" id="laundryVerdict"></p>
         <div class="laundry-factors" id="laundryFactors"></div>
-      </div>
-
-      <!-- Stats Grid -->
-      <div class="stats-grid">
-        <div class="stat-card glass-card" id="statHumidity">
-          <div class="stat-icon">💧</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="humidity">Humidity</div>
-            <div class="stat-value" id="humidityVal">--%</div>
-          </div>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar" id="humidityBar"></div>
-          </div>
-        </div>
-
-        <div class="stat-card glass-card">
-          <div class="stat-icon">🌬</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="windSpeed">Wind Speed</div>
-            <div class="stat-value" id="windVal">-- km/h</div>
-          </div>
-          <div class="stat-sub" id="windDir">—</div>
-        </div>
-
-        <div class="stat-card glass-card">
-          <div class="stat-icon">👁</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="visibility">Visibility</div>
-            <div class="stat-value" id="visibilityVal">-- km</div>
-          </div>
-          <div class="stat-sub" data-i18n="clearView">Clear view</div>
-        </div>
-
-        <div class="stat-card glass-card">
-          <div class="stat-icon">☀️</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="uvIndex">UV Index</div>
-            <div class="stat-value" id="uvVal">--</div>
-          </div>
-          <div class="stat-sub" id="uvLabel">—</div>
-        </div>
-
-        <div class="stat-card glass-card">
-          <div class="stat-icon">🌧</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="precipitation">Precipitation</div>
-            <div class="stat-value" id="precipVal">-- mm</div>
-          </div>
-          <div class="stat-sub" data-i18n="lastHour">Last hour</div>
-        </div>
-
-        <div class="stat-card glass-card">
-          <div class="stat-icon">🧭</div>
-          <div class="stat-info">
-            <div class="stat-label" data-i18n="pressure">Pressure</div>
-            <div class="stat-value" id="pressureVal">-- hPa</div>
-          </div>
-          <div class="stat-sub" id="pressureLabel">—</div>
-        </div>
       </div>
 
       <!-- 7-Day Forecast -->

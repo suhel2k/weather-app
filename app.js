@@ -10,6 +10,17 @@
 const GEO_API = 'https://geocoding-api.open-meteo.com/v1/search';
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
 
+const LOCATION_PRESETS = {
+  'connecticut': {
+    name: 'Connecticut',
+    country: 'United States',
+    admin1: 'Connecticut',
+    country_code: 'US',
+    latitude: 41.6032,
+    longitude: -72.6877
+  }
+};
+
 let state = {
   unit: 'celsius',       // 'celsius' | 'fahrenheit'
   currentData: null,     // raw API response
@@ -300,7 +311,19 @@ function attachEvents() {
   document.querySelectorAll('.city-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       cityInput.value = chip.dataset.city;
-      searchCity(chip.dataset.city);
+      if (chip.dataset.lat && chip.dataset.lon) {
+        const lat = parseFloat(chip.dataset.lat);
+        const lon = parseFloat(chip.dataset.lon);
+        const name = chip.dataset.city;
+        const country = chip.dataset.country || '';
+        const region = chip.dataset.region || '';
+        state.geoData = { name, country, admin1: region, latitude: lat, longitude: lon };
+        showLoading();
+        autocomplete.classList.remove('visible');
+        fetchWeather(lat, lon, name, country, region);
+      } else {
+        searchCity(chip.dataset.city);
+      }
     });
   });
 
@@ -337,15 +360,33 @@ function setLang(lang) {
    ========================================== */
 async function fetchAutocomplete(query) {
   try {
-    const res = await fetch(`${GEO_API}?name=${encodeURIComponent(query)}&count=6&language=en&format=json`);
+    const res = await fetch(`${GEO_API}?name=${encodeURIComponent(query)}&count=8&language=en&format=json`);
     const data = await res.json();
 
-    if (!data.results || data.results.length === 0) {
+    let results = data.results || [];
+    const qLower = query.toLowerCase().trim();
+
+    // If query matches a preset location, prioritize the preset entry
+    if (LOCATION_PRESETS[qLower]) {
+      results = results.filter(r => r.name.toLowerCase() !== LOCATION_PRESETS[qLower].name.toLowerCase());
+      results.unshift(LOCATION_PRESETS[qLower]);
+    } else {
+      // Prioritize exact name matches over partial matches
+      results.sort((a, b) => {
+        const aExact = a.name.toLowerCase() === qLower;
+        const bExact = b.name.toLowerCase() === qLower;
+        if (aExact && !bExact) return -1;
+        if (!aExact && bExact) return 1;
+        return 0;
+      });
+    }
+
+    if (results.length === 0) {
       autocomplete.classList.remove('visible');
       return;
     }
 
-    autocomplete.innerHTML = data.results.map(r => `
+    autocomplete.innerHTML = results.slice(0, 6).map(r => `
       <div class="autocomplete-item" data-lat="${r.latitude}" data-lon="${r.longitude}"
            data-name="${r.name}" data-country="${r.country || ''}" data-region="${r.admin1 || ''}">
         <span class="ac-icon">${getFlagEmoji(r.country_code)}</span>
@@ -376,8 +417,17 @@ async function searchCity(cityName) {
   showLoading();
   autocomplete.classList.remove('visible');
 
+  // Check preset locations first (e.g. US state Connecticut)
+  const presetKey = cityName.toLowerCase().trim();
+  if (LOCATION_PRESETS[presetKey]) {
+    const city = LOCATION_PRESETS[presetKey];
+    state.geoData = city;
+    await fetchWeather(city.latitude, city.longitude, city.name, city.country, city.admin1 || '');
+    return;
+  }
+
   try {
-    const res = await fetch(`${GEO_API}?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`);
+    const res = await fetch(`${GEO_API}?name=${encodeURIComponent(cityName)}&count=10&language=en&format=json`);
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
@@ -385,7 +435,9 @@ async function searchCity(cityName) {
       return;
     }
 
-    const city = data.results[0];
+    // Prefer exact name matches over partial matches like "Connecticut Hill"
+    const exactMatch = data.results.find(r => r.name.toLowerCase() === presetKey);
+    const city = exactMatch || data.results[0];
     state.geoData = city;
     await fetchWeather(city.latitude, city.longitude, city.name, city.country, city.admin1 || '');
 
@@ -461,27 +513,6 @@ function renderWeather(data, cityName, country, region) {
 
   $('weatherIconLarge').textContent = getWeatherIcon(wCode, isDay);
   $('weatherCondition').textContent = getWeatherDescription(wCode);
-
-  // Stats
-  $('humidityVal').textContent = `${cur.relative_humidity_2m}%`;
-  $('humidityBar').style.width = `${cur.relative_humidity_2m}%`;
-
-  const windKmh = Math.round(cur.wind_speed_10m);
-  $('windVal').textContent = `${windKmh} km/h`;
-  $('windDir').textContent = getWindDirection(cur.wind_direction_10m);
-
-  const vis = cur.visibility ? (cur.visibility / 1000).toFixed(1) : '--';
-  $('visibilityVal').textContent = `${vis} km`;
-
-  const uv = cur.uv_index != null ? Math.round(cur.uv_index) : '--';
-  $('uvVal').textContent = uv;
-  $('uvLabel').textContent = getUVLabel(uv);
-
-  $('precipVal').textContent = `${(cur.precipitation || 0).toFixed(1)} mm`;
-
-  const pressure = Math.round(cur.surface_pressure || 0);
-  $('pressureVal').textContent = `${pressure} hPa`;
-  $('pressureLabel').textContent = pressure > 1013 ? t('highPressure') : t('lowPressure');
 
   // Sun times
   const sunrise = new Date(daily.sunrise[0]);
