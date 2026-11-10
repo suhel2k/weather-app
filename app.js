@@ -190,7 +190,8 @@ function initParticles() {
 function startClock() {
   const el = $('headerTime');
   const update = () => {
-    el.textContent = new Date().toLocaleString('en-GB', {
+    const locale = state.lang === 'bn' ? 'bn-BD' : 'en-GB';
+    el.textContent = new Date().toLocaleString(locale, {
       weekday: 'short', day: 'numeric', month: 'short',
       hour: '2-digit', minute: '2-digit'
     });
@@ -264,6 +265,12 @@ function setLang(lang) {
   state.lang = lang;
   $('btnLangEn').classList.toggle('active', lang === 'en');
   $('btnLangBn').classList.toggle('active', lang === 'bn');
+  // Update clock immediately with the new locale
+  const locale = lang === 'bn' ? 'bn-BD' : 'en-GB';
+  $('headerTime').textContent = new Date().toLocaleString(locale, {
+    weekday: 'short', day: 'numeric', month: 'short',
+    hour: '2-digit', minute: '2-digit'
+  });
   applyLang();
 }
 
@@ -465,7 +472,7 @@ function renderForecast(daily) {
   days.forEach((dateStr, i) => {
     const isToday = dateStr === today;
     const date = new Date(dateStr + 'T12:00:00');
-    const dayLabel = isToday ? t('today') : date.toLocaleDateString('en-GB', { weekday: 'short' });
+    const dayLabel = isToday ? t('today') : date.toLocaleDateString(state.lang === 'bn' ? 'bn-BD' : 'en-GB', { weekday: 'short' });
 
     const high = state.unit === 'fahrenheit' ? cToF(Math.round(highs[i])) : Math.round(highs[i]);
     const low  = state.unit === 'fahrenheit' ? cToF(Math.round(lows[i]))  : Math.round(lows[i]);
@@ -515,7 +522,7 @@ function renderHourly(hourly, units, tz) {
     const d = new Date(timeStr);
     const hour = d.getHours();
     const isNow = i === 0;
-    const timeLabel = isNow ? t('now') : d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const timeLabel = isNow ? t('now') : d.toLocaleTimeString(state.lang === 'bn' ? 'bn-BD' : 'en-GB', { hour: '2-digit', minute: '2-digit' });
     const isDay = hour >= 6 && hour < 20;
     const tempVal = state.unit === 'fahrenheit' ? cToF(Math.round(sliceTemps[i])) : Math.round(sliceTemps[i]);
     const unit = state.unit === 'celsius' ? '°C' : '°F';
@@ -600,12 +607,14 @@ function cToF(c) {
 }
 
 function formatTime(date) {
-  return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const locale = state.lang === 'bn' ? 'bn-BD' : 'en-GB';
+  return date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 }
 
 function formatDatetimeInTz(tz) {
+  const locale = state.lang === 'bn' ? 'bn-BD' : 'en-GB';
   try {
-    return new Date().toLocaleString('en-GB', {
+    return new Date().toLocaleString(locale, {
       timeZone: tz,
       weekday: 'long', day: 'numeric', month: 'long',
       hour: '2-digit', minute: '2-digit'
